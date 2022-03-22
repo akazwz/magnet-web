@@ -1,8 +1,9 @@
-import { pirateBay } from './pirate-bay'
 import axios from 'axios'
+import { pirateBay } from './pirate-bay'
+import { rarbg } from './rarbg'
 
 export type Torrent = {
-  Name: string
+  Name: string | undefined
   Size: string
   DateUploaded: string
   Category: string
@@ -21,7 +22,9 @@ export const getHtml = async (url: string): Promise<string | null> => {
       const browser = await puppeteer.launch()
       const page = await browser.newPage()
       await page.goto(url)
-      return await page.content()
+      const content = await page.content()
+      await page.close()
+      return content
     } catch (e: unknown) {
       console.log(e)
       return null
@@ -43,5 +46,6 @@ export const getHtml = async (url: string): Promise<string | null> => {
 }
 
 export {
-  pirateBay
+  pirateBay,
+  rarbg
 }

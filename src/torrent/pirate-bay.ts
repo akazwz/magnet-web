@@ -7,7 +7,6 @@ export const pirateBay = async (query: string, page: number = 1) => {
   const url = 'https://thehiddenbay.com/search/' + query + '/' + page + '/99/0'
   const html = await getHtml(url)
   if (!html) return null
-  console.log(url)
   const $ = cheerio.load(html)
 
   $('table#searchResult tr').each((_, element) => {
@@ -28,7 +27,7 @@ export const pirateBay = async (query: string, page: number = 1) => {
       Magnet: $(element).find('td div.detName').next().attr('href')
     }
 
-    if (torrent.Name.length) {
+    if (torrent.Name?.length) {
       torrents.push(torrent)
     }
   })

@@ -3,34 +3,58 @@ import type { Torrent } from './index'
 import { getHtml } from './index'
 
 export const rarbg = async (query: string, page: number = 1) => {
+  const urls: string[] = []
   const torrents: Torrent[] = []
-  const url = 'https://thehiddenbay.com/search/' + query + '/' + page + '/99/0'
+  const url = 'https://rargb.to/search/' + page + '/?search=' + query
   const html = await getHtml(url)
   if (!html) return null
   console.log(url)
   const $ = cheerio.load(html)
 
-  $('table#searchResult tr').each((_, element) => {
-    const data = $(element).find('font.detDesc').text().replace(/(Size|Uploaded)/gi, '').replace(/ULed/gi, 'Uploaded').split(',').map(value => value.trim())
-    const date = data[0]
-    const size = data[1]
-    const uploader = $(element).find('font.detDesc a').text()
-
-    const torrent: Torrent = {
-      Name: $(element).find('a.detLink').text(),
-      Size: size,
-      DateUploaded: date,
-      Category: $(element).find('td.vertTh center a').eq(0).text(),
-      Seeders: $(element).find('td').eq(2).text(),
-      Leechers: $(element).find('td').eq(3).text(),
-      UploadedBy: uploader,
-      Url: $(element).find('a.detLink').attr('href'),
-      Magnet: $(element).find('td div.detName').next().attr('href')
-    }
-
-    if (torrent.Name.length) {
-      torrents.push(torrent)
-    }
+  /* 获取除 Magnet 外的所有信息 */
+  $('table.lista2t tbody').each((_, element) => {
+    $('tr.lista2').each((_, el) => {
+      const td = $(el).children('td')
+      const Name = $(td).eq(1).find('a').attr('title')
+      const Category = $(td).eq(2).find('a').text()
+      const DateUploaded = $(td).eq(3).text()
+      const Size = $(td).eq(4).text()
+      const Seeders = $(td).eq(5).find('font').text()
+      const Leechers = $(td).eq(6).text()
+      const UploadedBy = $(td).eq(7).text()
+      const Url = 'https://rargb.to' + $(td).eq(1).find('a').attr('href')
+      const Magnet = undefined
+      urls.push(Url)
+      torrents.push({
+        Name,
+        Category,
+        DateUploaded,
+        Size,
+        Seeders,
+        Leechers,
+        UploadedBy,
+        Url,
+        Magnet,
+      })
+    })
   })
+
+  /* 遍历获取 Magnet, 根据 url判断是否为同一个magnet */
+  await Promise.all(urls.map(async (url: string) => {
+    for (let i = 0; i < url.length; i++) {
+      if (torrents[i].Url === url) {
+        let html: string | null
+        try {
+          html = await getHtml(url)
+        } catch (e: unknown) {
+          return null
+        }
+        if (!html) return null
+        const $ = cheerio.load(html)
+        torrents[i].Magnet = $('tr:nth-child(1) > td:nth-child(2) > a:nth-child(3)').attr('href')
+      }
+    }
+  }))
+
   return torrents
 }
