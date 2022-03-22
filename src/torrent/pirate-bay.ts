@@ -4,7 +4,7 @@ import { getHtml } from './index'
 
 export const pirateBay = async (query: string, page: number = 1) => {
   const torrents: Torrent[] = []
-  const url = 'https://thehiddenbay.com/search/' + query + '/' + page + '/99/0'
+  const url = `https://thehiddenbay.com/search/${query}/${page}/99/0`
   const html = await getHtml(url)
   if (!html) return null
   const $ = cheerio.load(html)

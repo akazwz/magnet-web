@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { pirateBay } from './pirate-bay'
 import { nyaaSi } from './nyaa-si'
+import { torrentGalaxy } from './torrent-galaxy'
+import { bitSearch } from './bit-search'
+import { ezTV } from './eztv'
+import { zooqle } from './zooqle'
 import { rarbg } from './rarbg'
 
 export type Torrent = {
@@ -8,12 +12,14 @@ export type Torrent = {
   Size: string
   Url: string
   Magnet: string
-  DateUploaded: string
-  Category: string
   Seeders: string
-  Leechers: string
+  DateUploaded?: string
+  Leechers?: string
+  Category?: string
   UploadedBy?: string
   Downloads?: string
+  Age?: string
+  Torrent?: string
 }
 
 export const getHtml = async (url: string): Promise<string | null> => {
@@ -50,5 +56,9 @@ export const getHtml = async (url: string): Promise<string | null> => {
 export {
   pirateBay,
   nyaaSi,
+  torrentGalaxy,
+  bitSearch,
+  ezTV,
+  zooqle,
   rarbg,
 }

@@ -4,7 +4,7 @@ import { getHtml } from './index'
 
 export const nyaaSi = async (query: string, page: number = 1) => {
   const torrents: Torrent[] = []
-  const url = 'https://nyaa.si/?f=0&c=0_0&q=' + query + '&p=' + page
+  const url = `https://nyaa.si/?f=0&c=0_0&q=${query}&p=${page}`
   const html = await getHtml(url)
   if (!html) return null
 
@@ -43,7 +43,9 @@ export const nyaaSi = async (query: string, page: number = 1) => {
       })
     })
 
-    torrents.push(torrent)
+    if (torrent.Name !== '') {
+      torrents.push(torrent)
+    }
   })
 
   return torrents

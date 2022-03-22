@@ -5,7 +5,7 @@ import { getHtml } from './index'
 export const rarbg = async (query: string, page: number = 1) => {
   const urls: string[] = []
   const torrents: Torrent[] = []
-  const url = 'https://rargb.to/search/' + page + '/?search=' + query
+  const url = `https://rargb.to/search/${page}/?search=${query}`
   const html = await getHtml(url)
   if (!html) return null
   console.log(url)
