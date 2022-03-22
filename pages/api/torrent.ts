@@ -8,8 +8,8 @@ type Res = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Res>) {
-  const html = await pirateBay('1080')
-  if (!html) {
+  const torrents = await pirateBay('1080')
+  if (!torrents) {
     res.status(200).json({
       code: 4000,
       data: null,
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
   res.status(200).json({
     code: 2000,
-    data: html,
+    data: torrents,
     msg: '获取成功'
   })
 }
