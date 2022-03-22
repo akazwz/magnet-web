@@ -1,13 +1,19 @@
+import { ChangeEvent, useState } from 'react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { Flex, Heading, IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { ChangeEvent, useState } from 'react'
 
 const Home: NextPage = () => {
+  const router = useRouter()
   const [query, setQuery] = useState<string>('')
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const handleSearchBtnClick = () => {
     setBtnLoading(true)
+    router.push({
+      pathname: '/search/[query]',
+      query: { query: query },
+    }).then()
   }
   return (
     <Flex
