@@ -15,7 +15,7 @@ export const rarbg = async (query: string, page: number = 1) => {
   $('table.lista2t tbody').each((_, element) => {
     $('tr.lista2').each((_, el) => {
       const td = $(el).children('td')
-      const Name = $(td).eq(1).find('a').attr('title')
+      const Name = $(td).eq(1).find('a').attr('title') || ''
       const Category = $(td).eq(2).find('a').text()
       const DateUploaded = $(td).eq(3).text()
       const Size = $(td).eq(4).text()
@@ -23,7 +23,7 @@ export const rarbg = async (query: string, page: number = 1) => {
       const Leechers = $(td).eq(6).text()
       const UploadedBy = $(td).eq(7).text()
       const Url = 'https://rargb.to' + $(td).eq(1).find('a').attr('href')
-      const Magnet = undefined
+      const Magnet = ''
       urls.push(Url)
       torrents.push({
         Name,
@@ -51,7 +51,7 @@ export const rarbg = async (query: string, page: number = 1) => {
         }
         if (!html) return null
         const $ = cheerio.load(html)
-        torrents[i].Magnet = $('tr:nth-child(1) > td:nth-child(2) > a:nth-child(3)').attr('href')
+        torrents[i].Magnet = $('tr:nth-child(1) > td:nth-child(2) > a:nth-child(3)').attr('href') || ''
       }
     }
   }))
