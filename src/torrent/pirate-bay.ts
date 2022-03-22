@@ -1,16 +1,6 @@
 import cheerio from 'cheerio'
-
-export type Torrent = {
-  Name: string
-  Size: string
-  DateUploaded: string
-  Category: string
-  Seeders: string
-  Leechers: string
-  UploadedBy: string
-  Url: string | undefined
-  Magnet: string | undefined
-}
+import axios from 'axios'
+import type { Torrent } from './index'
 
 const getHtml = async (url: string): Promise<string | null> => {
   /* 开发环境 */
@@ -28,8 +18,8 @@ const getHtml = async (url: string): Promise<string | null> => {
   } else {
     /* 生产环境 */
     try {
-      const res = await fetch(url)
-      return await res.text()
+      const res = await axios.get(url)
+      return await res.data
     } catch (e: unknown) {
       console.log(e)
       return null

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { pirateBay } from '../../src/torrent/pirate-bay'
+import { pirateBay } from '../../src/torrent'
 
 type Res = {
   code: number
