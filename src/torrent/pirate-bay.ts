@@ -23,7 +23,7 @@ export const pirateBay = async (query: string, page: number = 1) => {
       Seeders: $(element).find('td').eq(2).text(),
       Leechers: $(element).find('td').eq(3).text(),
       UploadedBy: uploader,
-      Url: $(element).find('a.detLink').attr('href'),
+      Url: $(element).find('a.detLink').attr('href') || '',
       Magnet: $(element).find('td div.detName').next().attr('href')
     }
 

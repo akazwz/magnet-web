@@ -10,7 +10,7 @@ export type Torrent = {
   Seeders: string
   Leechers: string
   UploadedBy: string
-  Url: string | undefined
+  Url: string
   Magnet: string | undefined
 }
 
