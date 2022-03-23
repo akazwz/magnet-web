@@ -12,7 +12,7 @@ import {
   IconButton,
   SimpleGrid,
   useClipboard,
-  useToast,
+  useToast, Button,
 } from '@chakra-ui/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { CopyIcon } from '@chakra-ui/icons'
@@ -35,6 +35,10 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   /* 今年,日期格式为 MM-DD HH:mm */
   if (dateStr?.indexOf(':') !== -1) {
     date = dayjs(dayjs().year() + '/' + dateStr, 'YYYY/MM/DD HH:mm')
+    /* Y-day */
+    if (!date.isValid()) {
+      date = dayjs().add(-1, 'day')
+    }
   } else {
     date = dayjs(dayjs(dateStr), 'MM/DD YYYY')
   }
@@ -46,7 +50,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   useEffect(() => {
     if (!hasCopied) return
     toast({
-      title: '复制成功',
+      title: 'Copy Magnet Success',
       position: 'top',
       status: 'success',
       duration: 3000,
@@ -62,35 +66,41 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
       padding={2}
     >
       {/* 超出换行 */}
-      <Text fontWeight='bold' wordBreak='break-all'>{item.Name}</Text>
+      <Link href={item.Magnet} fontWeight='bold' wordBreak='break-all'>{item.Name}</Link>
       <Divider />
-      <SimpleGrid minChildWidth='120px' spacing={3} fontSize='sm' fontWeight='light'>
+      <SimpleGrid minChildWidth='120px' spacing={3} fontSize='sm' fontWeight='light' paddingTop={1}>
         <HStack>
-          <Link href={item.Magnet}>magnet</Link>
-          <IconButton
+          <Button
             aria-label={'copy'}
-            icon={<CopyIcon fontSize='lg' />}
-            variant='ghost'
+            rightIcon={<CopyIcon fontSize='lg' />}
+            variant='outline'
             size='sm'
+            colorScheme='twitter'
+            rounded='sm'
             onClick={onCopy}
-          />
+          >
+            Copy
+          </Button>
         </HStack>
         <HStack>
-          <Text>
-            size:{item.Size}
-          </Text>
+          <Text>size:</Text>
+          <Text fontWeight='semibold'>{item.Size}</Text>
         </HStack>
         <HStack>
-          <Text>category:{item.Category}</Text>
+          <Text>category:</Text>
+          <Text fontWeight='semibold'>{item.Category}</Text>
         </HStack>
         <HStack>
-          <Text>date:{date.format('YYYY-MM-DD')}</Text>
+          <Text>date:</Text>
+          <Text fontWeight='semibold'>{date.format('YYYY-MM-DD')}</Text>
         </HStack>
         <HStack>
-          <Text>seeders:{item.Seeders}</Text>
+          <Text>seeders:</Text>
+          <Text fontWeight='semibold'>{item.Seeders}</Text>
         </HStack>
         <HStack>
-          <Text>leechers:{item.Leechers}</Text>
+          <Text>leechers:</Text>
+          <Text fontWeight='semibold'>{item.Leechers}</Text>
         </HStack>
       </SimpleGrid>
     </Box>

@@ -132,7 +132,7 @@ export const Pagination = ({ query, page, isLoading }: PaginationType) => {
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        <Button colorScheme='blue' isDisabled={!pageInputValue} onClick={handleGoToPages}>
+        <Button colorScheme='twitter' isDisabled={!pageInputValue} onClick={handleGoToPages}>
           GO
         </Button>
       </HStack>
