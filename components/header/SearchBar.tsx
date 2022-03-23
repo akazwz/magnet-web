@@ -1,7 +1,7 @@
-import { Flex, IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { SearchIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
+import { Flex, IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons'
 
 export const SearchBar = () => {
   const router = useRouter()
@@ -18,6 +18,12 @@ export const SearchBar = () => {
 
   const handleSearchBtnClick = () => {
     setBtnLoading(true)
+    /* 搜索关键词不变，刷新页面 */
+    if (query === queryState) {
+      router.reload()
+      return
+    }
+    /* 更换 url */
     router.replace({
       pathname: '/search/[query]',
       query: { query: queryState },

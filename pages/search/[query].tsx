@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Divider, Flex } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { SearchBar } from '../../components/header/SearchBar'
-import { SearchResultList } from '../../components/search/SearchResultList'
+import { SearchResultListPirateBay } from '../../components/search/SearchResultListPirateBay'
 import { Torrent } from '../../src/torrent'
 import { getPirateBay } from '../../src/api/api'
 
@@ -41,7 +41,7 @@ const Query: NextPage = () => {
       padding={3}
     >
       <SearchBar />
-      <SearchResultList data={torrents} isLoading={isLoading} />
+      <SearchResultListPirateBay data={torrents} isLoading={isLoading} />
     </Flex>
   )
 }
