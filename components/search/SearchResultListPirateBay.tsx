@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-
 import {
   Box,
   Text,
@@ -30,14 +29,14 @@ export type TorrentListItem = {
 
 const TorrentItemCard = ({ item }: TorrentListItem) => {
   /* 替换 html 空格 获取正确的日期格式 */
-  const dateStr = item.DateUploaded?.replaceAll(' ', ' ')
+  const dateStr = item.DateUploaded?.replaceAll(' ', ' ').replaceAll('-', '/')
 
   let date: Dayjs
   /* 今年,日期格式为 MM-DD HH:mm */
   if (dateStr?.indexOf(':') !== -1) {
-    date = dayjs(dayjs().year() + '-' + dateStr, 'YYYY-MM-DD HH:mm')
+    date = dayjs(dayjs().year() + '/' + dateStr, 'YYYY/MM/DD HH:mm')
   } else {
-    date = dayjs(dayjs(dateStr), 'MM-DD YYYY')
+    date = dayjs(dayjs(dateStr), 'MM/DD YYYY')
   }
 
   const { hasCopied, onCopy } = useClipboard(item.Magnet)
