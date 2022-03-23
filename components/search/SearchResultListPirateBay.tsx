@@ -1,18 +1,23 @@
+import { useEffect } from 'react'
+
 import {
   Box,
   Text,
   Link,
   Center,
+  HStack,
   Spinner,
   Heading,
   Divider,
   Container,
-  SimpleGrid, HStack, IconButton, useClipboard, useToast,
+  IconButton,
+  SimpleGrid,
+  useClipboard,
+  useToast,
 } from '@chakra-ui/react'
 import dayjs, { Dayjs } from 'dayjs'
-import { Torrent } from '../../src/torrent'
 import { CopyIcon } from '@chakra-ui/icons'
-import { useEffect } from 'react'
+import { Torrent } from '../../src/torrent'
 
 export type TorrentList = {
   data: Torrent[],
@@ -24,13 +29,12 @@ export type TorrentListItem = {
 }
 
 const TorrentItemCard = ({ item }: TorrentListItem) => {
-  const now = new Date()
   /* 替换 html 空格 获取正确的日期格式 */
   const dateStr = item.DateUploaded?.replaceAll(' ', ' ')
   let date: Dayjs
   /* 今年,日期格式为 MM-DD HH:mm */
   if (dateStr?.indexOf(':') !== -1) {
-    date = dayjs(now.getFullYear().toString() + '-' + dateStr, 'YYYY-MM-DD HH:mm')
+    date = dayjs(dayjs().year() + '-' + dateStr, 'YYYY-MM-DD HH:mm')
   } else {
     date = dayjs(dateStr, 'MM-DD YYYY')
   }
