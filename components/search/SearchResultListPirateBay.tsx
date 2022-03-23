@@ -37,7 +37,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   if (dateStr?.indexOf(':') !== -1) {
     date = dayjs(dayjs().year() + '-' + dateStr, 'YYYY-MM-DD HH:mm')
   } else {
-    date = dayjs(dateStr, 'MM-DD YYYY')
+    date = dayjs(dayjs(dateStr), 'MM-DD YYYY')
   }
 
   const { hasCopied, onCopy } = useClipboard(item.Magnet)
