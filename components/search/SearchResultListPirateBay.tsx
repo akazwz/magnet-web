@@ -84,7 +84,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
           <Text>category:{item.Category}</Text>
         </HStack>
         <HStack>
-          <Text>date:{date.format('YYYY MM DD')}</Text>
+          <Text>date:{date.format('YYYY-MM-DD')}</Text>
         </HStack>
         <HStack>
           <Text>seeders:{item.Seeders}</Text>
