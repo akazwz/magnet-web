@@ -3,16 +3,13 @@ import {
   Box,
   Text,
   Link,
-  Center,
+  Button,
   HStack,
-  Spinner,
-  Heading,
   Divider,
   Container,
-  IconButton,
   SimpleGrid,
   useClipboard,
-  useToast, Button,
+  useToast,
 } from '@chakra-ui/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { CopyIcon } from '@chakra-ui/icons'
@@ -20,7 +17,6 @@ import { Torrent } from '../../src/torrent'
 
 export type TorrentList = {
   data: Torrent[],
-  isLoading: boolean,
 }
 
 export type TorrentListItem = {
@@ -107,24 +103,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   )
 }
 
-export const SearchResultListPirateBay = ({ data, isLoading }: TorrentList) => {
-  /* 加载中 */
-  if (isLoading) {
-    return (
-      <Center height='80vh'>
-        <Spinner size='lg' />
-      </Center>
-    )
-  }
-  /* 数据为空 */
-  if (data.length === 0) {
-    return (
-      <>
-        <Heading>Empty</Heading>
-      </>
-    )
-  }
-
+export const SearchResultListPirateBay = ({ data }: TorrentList) => {
   return (
     <Container maxWidth='5xl'>
       {data.map((item) => (

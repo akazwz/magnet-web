@@ -7,6 +7,8 @@ import { SearchResultListPirateBay } from '../../components/search/SearchResultL
 import { Torrent } from '../../src/torrent'
 import { getPirateBay } from '../../src/api/api'
 import { Pagination } from '../../components/footer/Pagination'
+import { Loading } from '../../components/search/Loading'
+import { EmptyResult } from '../../components/search/EmptyResult'
 
 const Query: NextPage = () => {
   const router = useRouter()
@@ -43,8 +45,20 @@ const Query: NextPage = () => {
       padding={3}
     >
       <SearchBar />
-      <SearchResultListPirateBay data={torrents} isLoading={isLoading} />
-      <Pagination page={Number(page)} query={query?.toString() || ''} isLoading={isLoading} />
+      {/* 加载中 ? 加载页面 : 结果不为空 ? 结果 ： 空页面 */}
+      {
+        isLoading
+          ? <Loading />
+          : torrents.length > 1
+            ? <SearchResultListPirateBay data={torrents} />
+            : <EmptyResult />
+      }
+      {/* 分页 */}
+      {
+        torrents.length > 0
+          ? <Pagination page={Number(page)} query={query?.toString() || ''} isLoading={isLoading} />
+          : null
+      }
     </Flex>
   )
 }
