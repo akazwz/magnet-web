@@ -18,10 +18,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 type PaginationType = {
   query: string
   page: number
-  isLoading: boolean
 }
 
-export const Pagination = ({ query, page, isLoading }: PaginationType) => {
+export const Pagination = ({ query, page }: PaginationType) => {
   const router = useRouter()
 
   const [pageInputValue, setPageInputValue] = useState<number>()
@@ -109,7 +108,7 @@ export const Pagination = ({ query, page, isLoading }: PaginationType) => {
             onClick={handleLastPageClick}
           />
         </Square>
-        {isLoading ? <Spinner /> : pages}
+        {pages}
         <Square>
           <IconButton
             aria-label={'next page'}

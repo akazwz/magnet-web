@@ -55,9 +55,11 @@ const Query: NextPage = () => {
       }
       {/* 分页 */}
       {
-        torrents.length > 0
-          ? <Pagination page={Number(page)} query={query?.toString() || ''} isLoading={isLoading} />
-          : null
+        isLoading
+          ? null
+          : torrents.length > 1
+            ? <Pagination page={Number(page)} query={query?.toString() || ''} />
+            : null
       }
     </Flex>
   )
