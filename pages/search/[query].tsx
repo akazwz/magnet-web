@@ -10,15 +10,17 @@ import { Pagination } from '../../components/footer/Pagination'
 
 const Query: NextPage = () => {
   const router = useRouter()
-  const { query } = router.query
+  const { query, page } = router.query
   const [torrents, setTorrents] = useState<Torrent[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (!router.isReady) return
-    if (typeof query === 'string') {
+    if (typeof query === 'string' && typeof page === 'string') {
       setIsLoading(true)
-      getPirateBay(query).then((res) => {
+      /* page小于 1为非法 */
+      if (Number(page) < 1) return
+      getPirateBay(query, Number(page)).then((res) => {
         res.json().then((resData) => {
           setIsLoading(false)
           const { data } = resData
@@ -31,7 +33,7 @@ const Query: NextPage = () => {
         alert('获取数据失败')
       })
     }
-  }, [query, router.isReady])
+  }, [page, query, router.isReady])
 
   return (
     <Flex
@@ -42,7 +44,7 @@ const Query: NextPage = () => {
     >
       <SearchBar />
       <SearchResultListPirateBay data={torrents} isLoading={isLoading} />
-      <Pagination />
+      <Pagination page={Number(page)} query={query?.toString() || ''} isLoading={isLoading} />
     </Flex>
   )
 }

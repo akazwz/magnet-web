@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     setBtnLoading(true)
     router.push({
       pathname: '/search/[query]',
-      query: { query: query },
+      query: { query: query, page: 1 },
     }).then()
   }
   return (
