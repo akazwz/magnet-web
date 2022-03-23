@@ -37,7 +37,6 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   if (dateStr?.indexOf(':') !== -1) {
     date = dayjs(dayjs().year() + '-' + dateStr, 'YYYY-MM-DD HH:mm')
   } else {
-    alert(dateStr)
     date = dayjs(dateStr, 'MM-DD YYYY')
   }
 
@@ -86,7 +85,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
           <Text>category:{item.Category}</Text>
         </HStack>
         <HStack>
-          <Text>date:{date.format('YYYY-MM-DD')}</Text>
+          <Text>date:{date.format('YYYY MM DD')}</Text>
         </HStack>
         <HStack>
           <Text>seeders:{item.Seeders}</Text>
