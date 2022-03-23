@@ -2,15 +2,17 @@ import {
   Box,
   Text,
   Link,
-  Stack,
   Center,
   Spinner,
   Heading,
-  WrapItem,
-  Container, Divider, Grid, SimpleGrid,
+  Divider,
+  Container,
+  SimpleGrid, HStack, IconButton, useClipboard, useToast,
 } from '@chakra-ui/react'
 import dayjs, { Dayjs } from 'dayjs'
 import { Torrent } from '../../src/torrent'
+import { CopyIcon } from '@chakra-ui/icons'
+import { useEffect } from 'react'
 
 export type TorrentList = {
   data: Torrent[],
@@ -32,6 +34,22 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   } else {
     date = dayjs(dateStr, 'MM-DD YYYY')
   }
+
+  const { hasCopied, onCopy } = useClipboard(item.Magnet)
+
+  const toast = useToast()
+
+  useEffect(() => {
+    if (!hasCopied) return
+    toast({
+      title: '复制成功',
+      position: 'top',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
+  }, [hasCopied, toast])
+
   return (
     <Box
       borderWidth={2}
@@ -42,13 +60,34 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
       {/* 超出换行 */}
       <Text fontWeight='bold' wordBreak='break-all'>{item.Name}</Text>
       <Divider />
-      <SimpleGrid minChildWidth='100px' spacing={3}>
-        <Link href={item.Magnet}>magnet</Link>
-        <Text>
-          size:{item.Size}
-        </Text>
-        <Text>category:{item.Category}</Text>
-        <Text>date:{date.format('YYYY-MM-DD')}</Text>
+      <SimpleGrid minChildWidth='120px' spacing={3} fontSize='sm' fontWeight='light'>
+        <HStack>
+          <Link href={item.Magnet}>magnet</Link>
+          <IconButton
+            aria-label={'copy'}
+            icon={<CopyIcon fontSize='lg' />}
+            variant='ghost'
+            size='sm'
+            onClick={onCopy}
+          />
+        </HStack>
+        <HStack>
+          <Text>
+            size:{item.Size}
+          </Text>
+        </HStack>
+        <HStack>
+          <Text>category:{item.Category}</Text>
+        </HStack>
+        <HStack>
+          <Text>date:{date.format('YYYY-MM-DD')}</Text>
+        </HStack>
+        <HStack>
+          <Text>seeders:{item.Seeders}</Text>
+        </HStack>
+        <HStack>
+          <Text>leechers:{item.Leechers}</Text>
+        </HStack>
       </SimpleGrid>
     </Box>
   )
@@ -78,7 +117,7 @@ export const SearchResultListPirateBay = ({ data, isLoading }: TorrentList) => {
         <Container
           key={item.Magnet}
           maxWidth='5xl'
-          padding={1}
+          padding={2}
         >
           <TorrentItemCard item={item} />
         </Container>

@@ -26,7 +26,7 @@ export const SearchBar = () => {
     /* 更换 url */
     router.replace({
       pathname: '/search/[query]',
-      query: { query: queryState },
+      query: { query: queryState, page: 1 },
     }).then(() => {
       setBtnLoading(false)
     })

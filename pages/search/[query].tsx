@@ -6,6 +6,7 @@ import { SearchBar } from '../../components/header/SearchBar'
 import { SearchResultListPirateBay } from '../../components/search/SearchResultListPirateBay'
 import { Torrent } from '../../src/torrent'
 import { getPirateBay } from '../../src/api/api'
+import { Pagination } from '../../components/footer/Pagination'
 
 const Query: NextPage = () => {
   const router = useRouter()
@@ -35,13 +36,13 @@ const Query: NextPage = () => {
   return (
     <Flex
       flexDir='column'
-      height='100vh'
       mx='auto'
       alignItems='center'
       padding={3}
     >
       <SearchBar />
       <SearchResultListPirateBay data={torrents} isLoading={isLoading} />
+      <Pagination />
     </Flex>
   )
 }
