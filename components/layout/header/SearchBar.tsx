@@ -11,7 +11,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 
 export const SearchBar = () => {
   const router = useRouter()
-  const { query } = router.query
+  const { query, provider, page } = router.query
   const [queryState, setQueryState] = useState<string>('')
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
 
@@ -32,7 +32,7 @@ export const SearchBar = () => {
     /* 更换 url */
     router.replace({
       pathname: '/search/[query]',
-      query: { query: queryState, page: 1 },
+      query: { query: queryState, provider: provider, page: page },
     }).then(() => {
       setBtnLoading(false)
     })

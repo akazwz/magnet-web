@@ -5,7 +5,7 @@ import {
   Spacer,
   HStack,
   Divider,
-  useColorModeValue, Link,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { Providers } from './Providers'

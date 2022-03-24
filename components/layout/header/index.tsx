@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import {
-  Divider,
   Flex,
+  Divider,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { SearchBar } from './SearchBar'

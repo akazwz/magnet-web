@@ -1,9 +1,8 @@
 import {
+  Link,
   Text,
-  Spacer,
-  Avatar,
   HStack,
-  useColorModeValue, Link,
+  useColorModeValue,
 } from '@chakra-ui/react'
 
 const UserProfileSideBar = () => {
@@ -12,7 +11,7 @@ const UserProfileSideBar = () => {
       p='24px'
       spacing='16px'
       h='75px'
-      whiteSpace="nowrap"
+      whiteSpace='nowrap'
       _hover={{ backgroundColor: useColorModeValue('blue.100', 'rgba(132,133,141,0.12)') }}
     >
       {/*<Avatar
@@ -22,7 +21,7 @@ const UserProfileSideBar = () => {
       <Text>akazwz</Text>
       <Spacer />*/}
       <Text>{`Made With ❤ By`}</Text>
-      <Link href='https://github.com/akazwz' isExternal>akazwz</Link>
+      <Link href='https://github.com/akazwz' isExternal>AKAZWZ</Link>
     </HStack>
   )
 }

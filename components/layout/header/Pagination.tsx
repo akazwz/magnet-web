@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
+  Stack,
   Square,
-  VStack,
   Button,
   HStack,
-  Spinner,
   IconButton,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberDecrementStepper,
-  NumberIncrementStepper, Stack,
+  NumberIncrementStepper,
 } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 
