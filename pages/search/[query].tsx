@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
-import { Flex } from '@chakra-ui/react'
-import { SearchBar } from '../../components/header/SearchBar'
+import { Box, Flex } from '@chakra-ui/react'
+import { SearchBar } from '../../components/layout/header/SearchBar'
 import { SearchResultListPirateBay } from '../../components/search/SearchResultListPirateBay'
 import { Torrent } from '../../src/torrent'
 import { getPirateBay } from '../../src/api/api'
@@ -11,6 +11,7 @@ import { Loading } from '../../components/search/Loading'
 import { EmptyResult } from '../../components/search/EmptyResult'
 import trans from '../../src/trans'
 import { TransPirateBayCardI } from '../../src/types'
+import { Layout } from '../../components/layout'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -58,30 +59,26 @@ const Query: (props: { transCard: TransPirateBayCardI }) => JSX.Element = (props
   }, [page, query, router.isReady])
 
   return (
-    <Flex
-      flexDir='column'
-      mx='auto'
-      alignItems='center'
-      padding={3}
-    >
-      <SearchBar />
-      {/* 加载中 ? 加载页面 : 结果不为空 ? 结果 ： 空页面 */}
-      {
-        isLoading
-          ? <Loading />
-          : torrents.length > 1
-            ? <SearchResultListPirateBay data={torrents} trans={transCard} />
-            : <EmptyResult />
-      }
-      {/* 分页 */}
-      {
-        isLoading
-          ? null
-          : torrents.length > 1
-            ? <Pagination page={Number(page)} query={query?.toString() || ''} />
-            : null
-      }
-    </Flex>
+    <Layout>
+      <Box maxWidth='5xl' mx='auto'>
+        {/* 加载中 ? 加载页面 : 结果不为空 ? 结果 ： 空页面 */}
+        {
+          isLoading
+            ? <Loading />
+            : torrents.length > 1
+              ? <SearchResultListPirateBay data={torrents} trans={transCard} />
+              : <EmptyResult />
+        }
+        {/* 分页 */}
+        {
+          isLoading
+            ? null
+            : torrents.length > 1
+              ? <Pagination page={Number(page)} query={query?.toString() || ''} />
+              : null
+        }
+      </Box>
+    </Layout>
   )
 }
 

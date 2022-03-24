@@ -115,16 +115,16 @@ const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
 
 export const SearchResultListPirateBay = ({ data, trans }: TorrentList) => {
   return (
-    <Container maxWidth='5xl'>
+    <Box>
       {data.map((item) => (
-        <Container
+        <Box
           key={item.Magnet}
-          maxWidth='5xl'
-          padding={2}
+          mt={2}
+          mb={2}
         >
           <TorrentItemCard item={item} trans={trans} />
-        </Container>
+        </Box>
       ))}
-    </Container>
+    </Box>
   )
 }
