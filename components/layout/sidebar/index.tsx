@@ -49,7 +49,7 @@ export const SidebarContent = ({ isOpen }: SideBarI) => {
       w={isOpen ? '240px' : 0}
       transition={'width .66s cubic-bezier(0.66, 0, 0.01, 1)'}
       willChange='width'
-      bg={useColorModeValue('white', 'rgb(34, 34, 38)')}
+      bg={useColorModeValue('gray.50', 'rgb(34, 34, 38)')}
       pos='fixed'
       h='full'
       overflow='scroll'

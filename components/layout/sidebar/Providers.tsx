@@ -14,10 +14,10 @@ interface ProviderPropsI {
 
 const ProviderList: Array<ProviderPropsI> = [
   { name: 'Pirate Bay', provider: 'pirate-bay', logo: '' },
-  { name: 'Bit Search', provider: 'bit-search', logo: '' },
   { name: 'Nyaa SI', provider: 'nyaa-si', logo: '' },
   { name: 'EZTV', provider: 'eztv', logo: '' },
   { name: 'Torrent Galaxy', provider: 'torrent-galaxy', logo: '' },
+  { name: 'Bit Search', provider: 'bit-search', logo: '' },
 ]
 
 export const Providers = () => {

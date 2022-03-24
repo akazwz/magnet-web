@@ -10,7 +10,7 @@ import { Pagination } from './Pagination'
 export const Header = () => {
   const router = useRouter()
   const { query, page } = router.query
-  const bg = useColorModeValue('gray.100', 'rgb(17, 17, 19)')
+  const bg = useColorModeValue('white', 'rgb(17, 17, 19)')
   return (
     <Flex
       alignItems='center'
