@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export const Layout = ({ children }: IProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true })
+  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: false })
   const bg = useColorModeValue('gray.100', 'rgb(17, 17, 19)')
 
   return (
