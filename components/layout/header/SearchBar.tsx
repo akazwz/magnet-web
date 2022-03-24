@@ -50,7 +50,7 @@ export const SearchBar = () => {
         roundedRight='none'
         borderWidth={1}
         value={queryState}
-        width={{ base: 'sm', md: 'md', lg: 'xl' }}
+        width={{ base: 'xxs', md: 'md', lg: 'xl' }}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setQueryState(e.target.value)}
       />
       <Box display={{ base: 'none', md: 'flex' }}>

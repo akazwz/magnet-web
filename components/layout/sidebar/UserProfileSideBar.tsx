@@ -12,6 +12,7 @@ const UserProfileSideBar = () => {
       p='24px'
       spacing='16px'
       h='75px'
+      whiteSpace="nowrap"
       _hover={{ backgroundColor: useColorModeValue('blue.100', 'rgba(132,133,141,0.12)') }}
     >
       {/*<Avatar
