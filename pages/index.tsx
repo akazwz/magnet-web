@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Flex, Heading, IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Button, Flex, Heading, HStack, Input, } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 
 const Home: NextPage = () => {
@@ -9,6 +9,7 @@ const Home: NextPage = () => {
   const [query, setQuery] = useState<string>('')
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const handleSearchBtnClick = () => {
+    if (query.length < 1) return
     setBtnLoading(true)
     router.push({
       pathname: '/search/[query]',
@@ -25,31 +26,35 @@ const Home: NextPage = () => {
       justifyContent='center'
       padding={3}
     >
-      <Heading margin={10}>Torrent Search</Heading>
-      <InputGroup size='lg'>
+      <Heading
+        bgGradient='linear(to-r,  #FF0080, #00B0FF)'
+        bgClip='text'
+        fontWeight='extrabold'
+        whiteSpace='nowrap'
+        margin={10}
+      >
+        Magnet Web
+      </Heading>
+      <HStack spacing={0}>
         <Input
-          rounded='lg'
+          roundedRight='none'
           borderWidth={2}
+          size='lg'
+          placeholder={'keyword'}
           value={query}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
         />
-        <InputRightElement>
-          <IconButton
-            aria-label={'search'}
-            backgroundColor='blue.500'
-            _hover={{
-              backgroundColor: 'blue.600'
-            }}
-            _focusWithin={{
-              backgroundColor: 'blue.600'
-            }}
-            size='lg'
-            icon={<SearchIcon />}
-            isLoading={btnLoading}
-            onClick={handleSearchBtnClick}
-          />
-        </InputRightElement>
-      </InputGroup>
+        <Button
+          roundedLeft={'none'}
+          colorScheme='twitter'
+          leftIcon={<SearchIcon />}
+          size='lg'
+          isLoading={btnLoading}
+          onClick={handleSearchBtnClick}
+        >
+          Search
+        </Button>
+      </HStack>
     </Flex>
   )
 }
