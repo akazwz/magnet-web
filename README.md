@@ -1,5 +1,7 @@
 # Magnet Web --- magnets search of yourself
 
+[简体中文](README_ZH.md)
+
 # Features
 
 1. Multi Sites: pirate bay, nyaa, eztv, torrent galaxy...

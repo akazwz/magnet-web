@@ -1,5 +1,7 @@
 # Magnet Web --- 你自己的磁力搜索
 
+[English](README.md)
+
 # 特点
 
 1. 多站点搜索: pirate bay, nyaa, eztv, torrent galaxy等等
