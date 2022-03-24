@@ -1,18 +1,30 @@
+import { useRouter } from 'next/router'
 import {
-  Box, Button,
-  Flex, Hide,
-  HStack,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement, Spacer, useColorMode,
-  useColorModeValue
+  Divider,
+  Flex,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { ArrowLeftIcon, ArrowRightIcon, HamburgerIcon, MoonIcon, SearchIcon, SunIcon } from '@chakra-ui/icons'
 import { SearchBar } from './SearchBar'
+import { Pagination } from './Pagination'
 
 export const Header = () => {
+  const router = useRouter()
+  const { query, page } = router.query
+  const bg = useColorModeValue('gray.100', 'rgb(17, 17, 19)')
   return (
-    <SearchBar />
+    <Flex
+      alignItems='center'
+      flexDirection='column'
+      position='sticky'
+      top='0'
+      zIndex='3'
+      bg={bg}
+      paddingBottom='10px'
+    >
+      <SearchBar />
+      <Pagination page={Number(page)} query={query?.toString() || ''} />
+      <Divider />
+    </Flex>
   )
 }
+

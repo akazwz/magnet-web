@@ -1,16 +1,15 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
-  Box, Button,
-  HStack,
-  IconButton,
+  Box,
   Input,
-  useColorModeValue
+  HStack,
+  Button,
+  IconButton,
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 
 export const SearchBar = () => {
-  const bg = useColorModeValue('gray.100', 'rgb(17, 17, 19)')
   const router = useRouter()
   const { query } = router.query
   const [queryState, setQueryState] = useState<string>('')
@@ -44,11 +43,6 @@ export const SearchBar = () => {
       paddingTop={'10px'}
       paddingBottom={'10px'}
       spacing={0}
-      position='sticky'
-      top='0'
-      zIndex='3'
-      bg={bg}
-      w='100%'
       alignItems='center'
       justifyContent='center'
     >

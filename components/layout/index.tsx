@@ -41,15 +41,13 @@ export const Layout = ({ children }: IProps) => {
       </HStack>
       {/* header and main */}
       <Box
-        h='100vh'
+        h='full'
         w='100%'
         paddingRight='24px'
         paddingBottom='12px'
-        overflow='scroll'
+        overflowY='scroll'
         css={{
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
+          '&::-webkit-scrollbar': {},
         }}
       >
         <Header />

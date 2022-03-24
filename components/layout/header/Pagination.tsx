@@ -11,7 +11,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   NumberDecrementStepper,
-  NumberIncrementStepper,
+  NumberIncrementStepper, Stack,
 } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 
@@ -22,6 +22,7 @@ type PaginationType = {
 
 export const Pagination = ({ query, page }: PaginationType) => {
   const router = useRouter()
+  const { provider } = router.query
 
   const [pageInputValue, setPageInputValue] = useState<number>()
 
@@ -64,7 +65,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
   const handlePagesClick = (page: number) => {
     router.replace({
       pathname: '/search/[query]',
-      query: { query: query, page: page },
+      query: { query: query, provider: provider, page: page },
     }).then()
   }
 
@@ -72,7 +73,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
   const handleNextPageClick = () => {
     router.replace({
       pathname: '/search/[query]',
-      query: { query: query, page: page + 1 },
+      query: { query: query, provider: provider, page: page + 1 },
     }).then()
   }
 
@@ -80,7 +81,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
   const handleLastPageClick = () => {
     router.replace({
       pathname: '/search/[query]',
-      query: { query: query, page: page - 1 },
+      query: { query: query, provider: provider, page: page - 1 },
     }).then()
   }
 
@@ -88,7 +89,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
   const handleGoToPages = () => {
     router.replace({
       pathname: '/search/[query]',
-      query: { query: query, page: pageInputValue },
+      query: { query: query, provider: provider, page: pageInputValue },
     }).then()
   }
 
@@ -98,7 +99,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
   }, [page])
 
   return (
-    <VStack>
+    <Stack direction={{ base: 'column', md: 'row' }} mb={2}>
       <HStack>
         <Square>
           <IconButton
@@ -121,7 +122,7 @@ export const Pagination = ({ query, page }: PaginationType) => {
       <HStack>
         <NumberInput
           min={1}
-          maxW={32}
+          maxW={24}
           value={pageInputValue}
           onChange={(value) => setPageInputValue(Number(value))}
         >
@@ -135,6 +136,6 @@ export const Pagination = ({ query, page }: PaginationType) => {
           GO
         </Button>
       </HStack>
-    </VStack>
+    </Stack>
   )
 }

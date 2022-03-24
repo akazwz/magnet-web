@@ -5,13 +5,15 @@ import {
   Spacer,
   HStack,
   Divider,
-  useColorModeValue,
+  useColorModeValue, Link,
 } from '@chakra-ui/react'
 import { TriangleUpIcon } from '@chakra-ui/icons'
 import { Providers } from './Providers'
 import UserProfileSideBar from './UserProfileSideBar'
+import { useRouter } from 'next/router'
 
 const SidebarTop = () => {
+  const router = useRouter()
   return (
     <Flex
       alignItems='center'
@@ -23,6 +25,8 @@ const SidebarTop = () => {
       <HStack
         spacing={3}
         h='24px'
+        onClick={() => router.push('/', '/', { locale: router.locale })}
+        _hover={{ cursor: 'pointer' }}
       >
         <TriangleUpIcon color={'yellow'} />
         <Text

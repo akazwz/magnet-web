@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 import { GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
-import { Box, Flex } from '@chakra-ui/react'
-import { SearchBar } from '../../components/layout/header/SearchBar'
-import { SearchResultListPirateBay } from '../../components/search/SearchResultListPirateBay'
+import { Box } from '@chakra-ui/react'
+import { SearchResultList } from '../../components/search/SearchResultList'
 import { Torrent } from '../../src/torrent'
-import { getPirateBay } from '../../src/api/api'
-import { Pagination } from '../../components/footer/Pagination'
+import { getMagnetsByApi } from '../../src/api/api'
 import { Loading } from '../../components/search/Loading'
 import { EmptyResult } from '../../components/search/EmptyResult'
 import trans from '../../src/trans'
@@ -33,17 +31,18 @@ export const getStaticProps = async (ctx: { locale: string }) => {
 const Query: (props: { transCard: TransPirateBayCardI }) => JSX.Element = (props: { transCard: TransPirateBayCardI }) => {
   const { transCard } = props
   const router = useRouter()
-  const { query, page } = router.query
+  const { query, provider, page } = router.query
   const [torrents, setTorrents] = useState<Torrent[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (!router.isReady) return
-    if (typeof query === 'string' && typeof page === 'string') {
-      setIsLoading(true)
-      /* page小于 1为非法 */
-      if (Number(page) < 1) return
-      getPirateBay(query, Number(page)).then((res) => {
+    if (typeof query !== 'string' || typeof provider !== 'string' || typeof page !== 'string') return
+    if (Number(page) < 1) return
+    setIsLoading(true)
+
+    const handleGetMagnets = () => {
+      getMagnetsByApi(query, provider, Number(page)).then((res) => {
         res.json().then((resData) => {
           setIsLoading(false)
           const { data } = resData
@@ -56,27 +55,21 @@ const Query: (props: { transCard: TransPirateBayCardI }) => JSX.Element = (props
         alert('获取数据失败')
       })
     }
-  }, [page, query, router.isReady])
+    handleGetMagnets()
+  }, [page, provider, query, router.isReady])
+
+  if (isLoading) {
+    return <Layout><Loading /></Layout>
+  }
+
+  if (torrents.length < 1) {
+    return <Layout><EmptyResult /></Layout>
+  }
 
   return (
     <Layout>
       <Box maxWidth='5xl' mx='auto'>
-        {/* 加载中 ? 加载页面 : 结果不为空 ? 结果 ： 空页面 */}
-        {
-          isLoading
-            ? <Loading />
-            : torrents.length > 1
-              ? <SearchResultListPirateBay data={torrents} trans={transCard} />
-              : <EmptyResult />
-        }
-        {/* 分页 */}
-        {
-          isLoading
-            ? null
-            : torrents.length > 1
-              ? <Pagination page={Number(page)} query={query?.toString() || ''} />
-              : null
-        }
+        <SearchResultList data={torrents} trans={transCard} />
       </Box>
     </Layout>
   )

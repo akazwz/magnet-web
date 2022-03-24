@@ -27,11 +27,12 @@ export const getHtml = async (url: string): Promise<string | null> => {
   if (process.env.NODE_ENV === 'development') {
     try {
       const puppeteer = require('puppeteer')
-      const browser = await puppeteer.launch()
+      const browser = await puppeteer.launch({ headless: true })
       const page = await browser.newPage()
       await page.goto(url)
       const content = await page.content()
       await page.close()
+      await browser.close()
       return content
     } catch (e: unknown) {
       console.log(e)

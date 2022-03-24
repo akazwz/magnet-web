@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Text,
@@ -6,7 +7,6 @@ import {
   Button,
   HStack,
   Divider,
-  Container,
   SimpleGrid,
   useClipboard,
   useToast,
@@ -27,12 +27,15 @@ export type TorrentListItem = {
 }
 
 const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
+  const { provider } = useRouter().query
+
   /* 替换 html 空格 获取正确的日期格式 */
   const dateStr = item.DateUploaded?.replaceAll(' ', ' ').replaceAll('-', '/')
 
   let date: Dayjs
+  let showDate: string
   /* 今年,日期格式为 MM-DD HH:mm */
-  if (dateStr?.indexOf(':') !== -1) {
+  if (dateStr?.indexOf(':') !== -1 && provider === 'pirate-bay') {
     date = dayjs(dayjs().year() + '/' + dateStr, 'YYYY/MM/DD HH:mm')
     /* Y-day */
     if (!date.isValid()) {
@@ -40,6 +43,21 @@ const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
     }
   } else {
     date = dayjs(dayjs(dateStr), 'MM/DD YYYY')
+  }
+
+  switch (provider) {
+    case 'nyaa-si':
+      date = dayjs(dateStr, 'YYYY/MM/DD HH:mm')
+      break
+    case 'eztv':
+      date = dayjs().add(-Number(dateStr?.split(' ')[0]), dateStr?.split(' ')[1])
+      break
+  }
+
+  if (date.isValid()) {
+    showDate = date.format('YYYY-MM-DD')
+  } else {
+    showDate = dateStr || ''
   }
 
   const { hasCopied, onCopy } = useClipboard(item.Magnet)
@@ -92,13 +110,18 @@ const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
           <Text>size:</Text>
           <Text fontWeight='semibold'>{item.Size}</Text>
         </HStack>
-        <HStack>
-          <Text>category:</Text>
-          <Text fontWeight='semibold'>{item.Category}</Text>
-        </HStack>
+        {
+          provider === 'pirate-bay' || provider === 'nyaa-si'
+            ?
+            <HStack>
+              <Text>category:</Text>
+              <Text fontWeight='semibold'>{item.Category}</Text>
+            </HStack>
+            : null
+        }
         <HStack>
           <Text>date:</Text>
-          <Text fontWeight='semibold'>{date.format('YYYY-MM-DD')}</Text>
+          <Text fontWeight='semibold'>{showDate}</Text>
         </HStack>
         <HStack>
           <Text>seeders:</Text>
@@ -113,7 +136,7 @@ const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
   )
 }
 
-export const SearchResultListPirateBay = ({ data, trans }: TorrentList) => {
+export const SearchResultList = ({ data, trans }: TorrentList) => {
   return (
     <Box>
       {data.map((item) => (
