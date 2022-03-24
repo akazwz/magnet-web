@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { NextPage } from 'next'
+import { GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import { Flex } from '@chakra-ui/react'
 import { SearchBar } from '../../components/header/SearchBar'
@@ -9,8 +9,28 @@ import { getPirateBay } from '../../src/api/api'
 import { Pagination } from '../../components/footer/Pagination'
 import { Loading } from '../../components/search/Loading'
 import { EmptyResult } from '../../components/search/EmptyResult'
+import trans from '../../src/trans'
+import { TransPirateBayCardI } from '../../src/types'
 
-const Query: NextPage = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps = async (ctx: { locale: string }) => {
+  const { locale } = ctx
+  const transCard = await trans.pirateBay.fetch(locale)
+  return {
+    props: {
+      transCard,
+    }
+  }
+}
+
+const Query: (props: { transCard: TransPirateBayCardI }) => JSX.Element = (props: { transCard: TransPirateBayCardI }) => {
+  const { transCard } = props
   const router = useRouter()
   const { query, page } = router.query
   const [torrents, setTorrents] = useState<Torrent[]>([])
@@ -50,7 +70,7 @@ const Query: NextPage = () => {
         isLoading
           ? <Loading />
           : torrents.length > 1
-            ? <SearchResultListPirateBay data={torrents} />
+            ? <SearchResultListPirateBay data={torrents} trans={transCard} />
             : <EmptyResult />
       }
       {/* 分页 */}

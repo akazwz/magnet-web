@@ -14,16 +14,19 @@ import {
 import dayjs, { Dayjs } from 'dayjs'
 import { CopyIcon } from '@chakra-ui/icons'
 import { Torrent } from '../../src/torrent'
+import { TransPirateBayCardI } from '../../src/types'
 
 export type TorrentList = {
   data: Torrent[],
+  trans: TransPirateBayCardI
 }
 
 export type TorrentListItem = {
   item: Torrent
+  trans: TransPirateBayCardI
 }
 
-const TorrentItemCard = ({ item }: TorrentListItem) => {
+const TorrentItemCard = ({ item, trans }: TorrentListItem) => {
   /* 替换 html 空格 获取正确的日期格式 */
   const dateStr = item.DateUploaded?.replaceAll(' ', ' ').replaceAll('-', '/')
 
@@ -62,7 +65,14 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
       padding={2}
     >
       {/* 超出换行 */}
-      <Link href={item.Magnet} fontWeight='bold' wordBreak='break-all'>{item.Name}</Link>
+      <Link
+        title={item.Name}
+        href={item.Magnet}
+        fontWeight='bold'
+        wordBreak='break-all'
+      >
+        {item.Name}
+      </Link>
       <Divider />
       <SimpleGrid minChildWidth='120px' spacing={3} fontSize='sm' fontWeight='light' paddingTop={1}>
         <HStack>
@@ -75,7 +85,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
             rounded='sm'
             onClick={onCopy}
           >
-            Copy
+            {trans.copy}
           </Button>
         </HStack>
         <HStack>
@@ -103,7 +113,7 @@ const TorrentItemCard = ({ item }: TorrentListItem) => {
   )
 }
 
-export const SearchResultListPirateBay = ({ data }: TorrentList) => {
+export const SearchResultListPirateBay = ({ data, trans }: TorrentList) => {
   return (
     <Container maxWidth='5xl'>
       {data.map((item) => (
@@ -112,7 +122,7 @@ export const SearchResultListPirateBay = ({ data }: TorrentList) => {
           maxWidth='5xl'
           padding={2}
         >
-          <TorrentItemCard item={item} />
+          <TorrentItemCard item={item} trans={trans} />
         </Container>
       ))}
     </Container>
